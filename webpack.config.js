@@ -26,9 +26,14 @@ module.exports = {
             {
                 test: /\.css/,
                 loader: "raw-loader"
+            },
+            {
+                test: /\.handlebars/,
+                loader: "handlebars-loader"
             }
         ]
     },
+    devtool: "source-map",
     plugins: [
         new BrowserSyncPlugin({
             host: "localhost",
