@@ -1,0 +1,23 @@
+<table class="camperLeaderboard">
+  <caption class="camperLeaderboard-title">Camper Leaderboard</caption>
+  <tr class="camperLeaderboard-headingRow">
+      <th class="camperLeaderboard-rankHeading">Rank</th>
+      <th class="camperLeaderboard-userNameHeading">Username</th>
+      <th id="recentPointsFilterToggle" class="camperLeaderboard-recentPointsHeading 
+        camperLeaderboard-recentPointsHeading-hasDownCaret">
+        Points in last 30 days
+      </th>
+      <th id="allTimePointsFilterToggle" class="camperLeaderboard-allTimePointsHeading 
+        camperLeaderboard-allTimePointsHeading-hasDownCaret">
+        All time points
+      </th>
+  </tr>
+  {{#each campers}}
+    <tr class="camperLeaderboard-camperDataRow">
+        <td class="camperLeaderboard-rank">{{rank}}</td>
+        <td class="camperLeaderboard-username">{{username}}</td>
+        <td class="camperLeaderboard-recentPoints">{{recent}}</td>
+        <td class="camperLeaderboard-allTimePoints">{{alltime}}</td>
+    </tr>
+  {{/each}}
+</table>
