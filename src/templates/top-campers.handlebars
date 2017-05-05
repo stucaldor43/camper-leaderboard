@@ -5,17 +5,26 @@
       <th class="camperLeaderboard-userNameHeading">Username</th>
       <th id="recentPointsFilterToggle" class="camperLeaderboard-recentPointsHeading 
         camperLeaderboard-recentPointsHeading-hasDownCaret">
-        Points in last 30 days
+        Points in last 30 days<span id="recentPointsSortingIcon" class="icono-caretDown"></span>
       </th>
       <th id="allTimePointsFilterToggle" class="camperLeaderboard-allTimePointsHeading 
         camperLeaderboard-allTimePointsHeading-hasDownCaret">
-        All time points
+        All time points<span id="allTimePointsSortingIcon" class="icono-caretDown"></span>
       </th>
   </tr>
   {{#each campers}}
     <tr class="camperLeaderboard-camperDataRow">
         <td class="camperLeaderboard-rank">{{rank}}</td>
-        <td class="camperLeaderboard-username">{{username}}</td>
+        <td class="camperLeaderboard-userInfo">
+          <div class="camperLeaderboard-userAvatarContainer">
+            <a target="_blank" class="camperLeaderboard-githubLink" href="https://github.com/{{username}}">
+            <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" data-src={{img}} class="b-lazy" width="32" height="32"/>
+            </a>
+          </div>
+          <div class="camperLeaderboard-usernameContainer">
+            <a target="_blank" class="camperLeaderboard-githubLink" href="https://github.com/{{username}}">{{username}}</a>
+          </div>
+        </td>
         <td class="camperLeaderboard-recentPoints">{{recent}}</td>
         <td class="camperLeaderboard-allTimePoints">{{alltime}}</td>
     </tr>
