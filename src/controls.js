@@ -1,25 +1,31 @@
 import fetchCamperList from './camperFetcher';
 import { SHOW_ALL_TIME_ASCENDING, SHOW_ALL_TIME_DESCENDING, SHOW_RECENT_ASCENDING, SHOW_RECENT_DESCENDING } from './camperFilters';
 import template from './templates/top-campers.handlebars';
+import Blazy from 'blazy'
 
 const addEvent = (element, eventType, handler) => {
     if (element.addEventListener) {
         element.addEventListener(eventType, handler);
+        return;
     }
-    else {
-        element.attachEvent(`on${eventType}`, handler);
-    }
+    element.attachEvent(`on${eventType}`, handler);
 }
 
 const findNode = (elementId) => document.getElementById(elementId);
 
-const insertCampers = (camperList) => document.getElementById("container").innerHTML = template({campers: camperList})
+const insertCampers = (camperList) => {
+    document.getElementById("container").innerHTML = template({campers: camperList})
+    const blazy = new Blazy({
+            container: "#container",
+            offset: 200
+    });
+}
 
 const sortByRecentPoints = () => {
     let recentFilterOrder = SHOW_RECENT_DESCENDING;
     return (e) => {
-        const triggerElement = findNode("recentPointsFilterToggle");
-        if (triggerElement === e.target) {
+        const triggerElements = [findNode("recentPointsFilterToggle"), findNode("recentPointsSortingIcon")];
+        if (triggerElements.includes(e.target)) {
             if (recentFilterOrder === SHOW_RECENT_DESCENDING) {
                 recentFilterOrder = SHOW_RECENT_ASCENDING;
             }
@@ -29,11 +35,12 @@ const sortByRecentPoints = () => {
             fetchCamperList(recentFilterOrder)
               .then(insertCampers)
               .then(() => {
-                const element = findNode("recentPointsFilterToggle");
-                const classes = ["camperLeaderboard-recentPointsHeading"];
-                (recentFilterOrder === SHOW_RECENT_DESCENDING) ? classes.push("camperLeaderboard-recentPointsHeading-hasDownCaret") : classes.push("camperLeaderboard-recentPointsHeading-hasUpCaret") ;
+                const element = findNode("recentPointsSortingIcon");
+                const classes = [""];
+                (recentFilterOrder === SHOW_RECENT_DESCENDING) ? classes.push("icono-caretDown") : classes.push("icono-caretUp") ;
                 element.className = classes.join(" ");
               })
+              .catch((err) => console.log(err));
         }
     }
 }
@@ -41,8 +48,8 @@ const sortByRecentPoints = () => {
 const sortByAllTimePoints = () => {
     let allTimeFilterOrder = SHOW_ALL_TIME_DESCENDING;
     return (e) => {
-        const triggerElement = findNode("allTimePointsFilterToggle");
-        if (triggerElement === e.target) {
+        const triggerElements = [findNode("allTimePointsFilterToggle"), findNode("allTimePointsSortingIcon")];
+        if (triggerElements.includes(e.target)) {
             if (allTimeFilterOrder === SHOW_ALL_TIME_DESCENDING) {
                 allTimeFilterOrder = SHOW_ALL_TIME_ASCENDING;
             }
@@ -52,11 +59,12 @@ const sortByAllTimePoints = () => {
             fetchCamperList(allTimeFilterOrder)
               .then(insertCampers)
               .then(() => {
-                const element = findNode("allTimePointsFilterToggle");
-                const classes = ["camperLeaderboard-allTimePointsHeading"];
-                (allTimeFilterOrder === SHOW_ALL_TIME_DESCENDING) ? classes.push("camperLeaderboard-allTimePointsHeading-hasDownCaret") : classes.push("camperLeaderboard-allTimePointsHeading-hasUpCaret") ;
+                const element = findNode("allTimePointsSortingIcon");
+                const classes = [""];
+                (allTimeFilterOrder === SHOW_ALL_TIME_DESCENDING) ? classes.push("icono-caretDown") : classes.push("icono-caretUp") ;
                 element.className = classes.join(" ");   
               })
+              .catch((err) => console.log(err));
         }
     }
 }
@@ -72,4 +80,5 @@ window.addEventListener("load", () => {
       .then(() => {
         attachListeners();
       })
+      .catch((err) => console.log(err));
 });
